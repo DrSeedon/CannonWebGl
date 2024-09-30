@@ -23,21 +23,18 @@
       }
     </style>
 	
-    <!-- Yandex.RTB -->
-<script>window.yaContextCb=window.yaContextCb||[]</script>
-<script src="https://yandex.ru/ads/system/context.js" async></script>
-	
+    <!-- Инициализация очереди для Яндекс рекламы -->
+    <script>
+        window.yaContextCb = window.yaContextCb || [];
+    </script>
+    
+    <!-- Загрузка скрипта Яндекс рекламы -->
+    <script src="https://yandex.ru/ads/system/context.js" async></script>
+    	
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
     <canvas id="unity-canvas" style="background: #231F20"></canvas><!-- Модальное окно рекламы -->
 	
-    <!-- Удаление или закомментирование существующего модального блока рекламы -->
-    <!--
-    <div id="ad-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 200px; background-color: white; box-shadow: 0px 0px 10px rgba(0,0,0,0.5); z-index: 1000;">
-      <p style="padding: 20px; font-size: 16px; text-align: center;">Здесь ваша реклама</p>
-      <button onclick="closeAd()" style="position: absolute; top: 10px; right: 10px; padding: 5px;">Закрыть</button>
-    </div>
-    -->
     <script src="Build/BuildWebGLNew.loader.js"></script>
     <script>
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
@@ -72,21 +69,23 @@
     <script>
         function OpenAdWindow() {
             window.yaContextCb.push(() => {
+			  if (Ya.Context.AdvManager.getPlatform() === 'desktop') {
+				// вызов полноэкранного блока для десктопной версии
 				Ya.Context.AdvManager.render({
-					"blockId": "R-A-12167215-1",
-					"type": "fullscreen",
-					"platform": "desktop"
-				})
-			})
+				  blockId: 'R-A-12163754-1',
+				  type: 'fullscreen',
+				  platform: 'desktop',
+				});
+			  } else {
+				// вызов полноэкранного блока для мобильной версии
+				Ya.Context.AdvManager.render({
+				  blockId: 'R-A-12163770-1',
+				  type: 'fullscreen',
+				  platform: 'touch',
+				});
+			  }
+		  });
         }
-
-        // Опционально: функция для открытия рекламы по таймеру или другим условиям
-        // Например, через 10 секунд после загрузки страницы
-        /*
-        setTimeout(() => {
-            OpenAdWindow();
-        }, 10000); // 10 секунд
-        */
     </script>
   </body>
 </html>
