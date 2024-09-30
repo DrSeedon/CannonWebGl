@@ -22,13 +22,43 @@
         background: #231F20;
       }
     </style>
+	
+    <!-- Код загрузчика рекламы Яндекса -->
+    <script>
+      // Инициализация очереди вызовов для Яндекса
+      window.yaContextCb = window.yaContextCb || [];
+
+      // Загрузка скрипта Яндекса
+      (function(w, d, s, id) {
+        w['YaAdScripts'] = w['YaAdScripts'] || [];
+        w['YaAdScripts'].push({
+          blockId: 'R-A-12163754-1', // Замените на ваш blockId для десктопной версии
+          type: 'fullscreen',
+          platform: 'desktop'
+        });
+        w['YaAdScripts'].push({
+          blockId: 'R-A-12163770-1', // Замените на ваш blockId для мобильной версии
+          type: 'fullscreen',
+          platform: 'touch'
+        });
+        var js = d.createElement(s), fjs = d.getElementsByTagName(s)[0];
+        js.src = "https://yastatic.net/pcode/adfox/stable/AdFox.js"; // Убедитесь, что это правильный URL для загрузки скрипта Яндекса
+        js.async = true;
+        fjs.parentNode.insertBefore(js, fjs);
+      })(window, document, 'script', 'yandex-ad-loader');
+    </script>
+	
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
     <canvas id="unity-canvas" style="background: #231F20"></canvas><!-- Модальное окно рекламы -->
-	<div id="ad-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 200px; background-color: white; box-shadow: 0px 0px 10px rgba(0,0,0,0.5); z-index: 1000;">
-		<p style="padding: 20px; font-size: 16px; text-align: center;">Здесь ваша реклама</p>
-		<button onclick="closeAd()" style="position: absolute; top: 10px; right: 10px; padding: 5px;">Закрыть</button>
-	</div>
+	
+    <!-- Удаление или закомментирование существующего модального блока рекламы -->
+    <!--
+    <div id="ad-modal" style="display: none; position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%); width: 300px; height: 200px; background-color: white; box-shadow: 0px 0px 10px rgba(0,0,0,0.5); z-index: 1000;">
+      <p style="padding: 20px; font-size: 16px; text-align: center;">Здесь ваша реклама</p>
+      <button onclick="closeAd()" style="position: absolute; top: 10px; right: 10px; padding: 5px;">Закрыть</button>
+    </div>
+    -->
     <script src="Build/BuildWebGLNew.loader.js"></script>
     <script>
       if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
@@ -58,19 +88,49 @@
         // devicePixelRatio: 1, // Uncomment this to override low DPI rendering on high DPI displays.
       });
     </script>
-	<script>
-      function openAd() {
-        document.getElementById('ad-modal').style.display = 'block';
-      }
-
-      function closeAd() {
-        document.getElementById('ad-modal').style.display = 'none';
-      }
-
-      // Открытие окна по команде из Unity (при вызове OpenAdWindow в Unity)
+	
+    <!-- Код для вызова полноэкранной рекламы Яндекса из Unity -->
+    <script>
       function OpenAdWindow() {
-        openAd();
+        // Добавляем функцию в очередь вызовов Яндекса
+        window.yaContextCb.push(() => {
+          // Проверка платформы пользователя
+          if (Ya && Ya.Context && Ya.Context.AdvManager) {
+            var platform = Ya.Context.AdvManager.getPlatform(); // 'desktop' или 'touch'
+
+            if (platform === 'desktop') {
+              // Вызов полноэкранного блока для десктопной версии
+              Ya.Context.AdvManager.render({
+                blockId: 'R-A-12163754-1', // Замените на ваш blockId для десктопа
+                type: 'fullscreen',
+                platform: 'desktop',
+                onClose: function() {
+                  // Действие после закрытия рекламы (опционально)
+                  console.log('Полноэкранная реклама (десктоп) закрыта.');
+                }
+              });
+            } else if (platform === 'touch') {
+              // Вызов полноэкранного блока для мобильной версии
+              Ya.Context.AdvManager.render({
+                blockId: 'R-A-12163770-1', // Замените на ваш blockId для мобильных устройств
+                type: 'fullscreen',
+                platform: 'touch',
+                onClose: function() {
+                  // Действие после закрытия рекламы (опционально)
+                  console.log('Полноэкранная реклама (мобильная) закрыта.');
+                }
+              });
+            } else {
+              console.warn('Неизвестная платформа для показа рекламы.');
+            }
+          } else {
+            console.error('Ya.Context.AdvManager не загружен.');
+          }
+        });
       }
+      
+      // Если вы используете историю или SPA-навигацию, убедитесь, что Ya.Context.AdvManager готов
+      // Можно добавить дополнительные проверки или инициализации при необходимости
     </script>
   </body>
 </html>
