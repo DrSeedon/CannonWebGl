@@ -23,47 +23,9 @@
       }
     </style>
 	
-    <!-- Инициализация очереди для Яндекс рекламы -->
-    <script>
-        window.yaContextCb = window.yaContextCb || [];
-    </script>
-    
-    <!-- Загрузка скрипта Яндекс рекламы -->
-    <script src="https://yandex.ru/ads/system/context.js" async></script>
-    
-    <!-- Скрипт для десктопной рекламы -->
-    <script>
-        window.yaContextCb.push(() => {
-            Ya.Context.AdvManager.render({
-                "blockId": "R-A-12163754-1", // Ваш blockId для десктопа
-                "type": "fullscreen",
-                "platform": "desktop",
-                "onClose": function() {
-                    console.log('Полноэкранная реклама (десктоп) закрыта.');
-                    // Вы можете вызвать метод Unity для возобновления игры или других действий
-                    // Пример:
-                    // unityInstance.SendMessage('GameManager', 'OnAdClosed');
-                }
-            });
-        });
-    </script>
-    
-    <!-- Скрипт для мобильной рекламы -->
-    <script>
-        window.yaContextCb.push(() => {
-            Ya.Context.AdvManager.render({
-                "blockId": "R-A-12163770-1", // Ваш blockId для мобильных устройств
-                "type": "fullscreen",
-                "platform": "touch",
-                "onClose": function() {
-                    console.log('Полноэкранная реклама (мобильная) закрыта.');
-                    // Вы можете вызвать метод Unity для возобновления игры или других действий
-                    // Пример:
-                    // unityInstance.SendMessage('GameManager', 'OnAdClosed');
-                }
-            });
-        });
-    </script>
+    <!-- Yandex.RTB -->
+<script>window.yaContextCb=window.yaContextCb||[]</script>
+<script src="https://yandex.ru/ads/system/context.js" async></script>
 	
   </head>
   <body style="text-align: center; padding: 0; border: 0; margin: 0;">
@@ -109,36 +71,13 @@
     <!-- Функция для вызова полноэкранной рекламы Яндекса из Unity -->
     <script>
         function OpenAdWindow() {
-            // Определяем платформу пользователя
-            var platform = Ya.Context.AdvManager.getPlatform(); // 'desktop' или 'touch'
-
-            if (platform === 'desktop') {
-                // Вызов полноэкранного блока для десктопной версии
-                Ya.Context.AdvManager.render({
-                    "blockId": "R-A-12163754-1", // Ваш blockId для десктопа
-                    "type": "fullscreen",
-                    "platform": "desktop",
-                    "onClose": function() {
-                        console.log('Полноэкранная реклама (десктоп) закрыта.');
-                        // Пример вызова метода Unity после закрытия рекламы:
-                        // unityInstance.SendMessage('GameManager', 'OnAdClosed');
-                    }
-                });
-            } else if (platform === 'touch') {
-                // Вызов полноэкранного блока для мобильной версии
-                Ya.Context.AdvManager.render({
-                    "blockId": "R-A-12163770-1", // Ваш blockId для мобильных устройств
-                    "type": "fullscreen",
-                    "platform": "touch",
-                    "onClose": function() {
-                        console.log('Полноэкранная реклама (мобильная) закрыта.');
-                        // Пример вызова метода Unity после закрытия рекламы:
-                        // unityInstance.SendMessage('GameManager', 'OnAdClosed');
-                    }
-                });
-            } else {
-                console.warn('Неизвестная платформа для показа рекламы.');
-            }
+            window.yaContextCb.push(() => {
+				Ya.Context.AdvManager.render({
+					"blockId": "R-A-12167215-1",
+					"type": "fullscreen",
+					"platform": "desktop"
+				})
+			})
         }
 
         // Опционально: функция для открытия рекламы по таймеру или другим условиям
