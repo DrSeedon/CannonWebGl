@@ -1,28 +1,8 @@
 <!DOCTYPE html>
 <html lang="en-us">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1.0, user-scalable=no, shrink-to-fit=yes">
     <title>Unity WebGL Player | CannonWEBGLGame</title>
-    <style>
-      body {
-        margin: 0;
-        padding: 0;
-        overflow: hidden;
-      }
-      
-      #unity-canvas {
-        position: absolute;
-        top: 0;
-        left: 50%;
-        transform: translateX(-50%);
-        width: calc(1080 / 1920 * 100vh);
-        height: 100vh;
-        background: #231F20;
-      }
-    </style>
-	
+    	
     <!-- Инициализация очереди для Яндекс рекламы -->
     <script>
         window.yaContextCb = window.yaContextCb || [];
@@ -32,9 +12,7 @@
     <script src="https://yandex.ru/ads/system/context.js" async></script>
     	
   </head>
-  <body style="text-align: center; padding: 0; border: 0; margin: 0;">
-    <canvas id="unity-canvas" style="background: #231F20"></canvas><!-- Модальное окно рекламы -->
-		
+  <body>		
     <!-- Функция для вызова полноэкранной рекламы Яндекса из Unity -->
     <script>
         function OpenAdWindow() {
