@@ -1,4 +1,3 @@
-<!DOCTYPE html>
 <html lang="en-us">
   <head>
     <title>Unity WebGL Player | CannonWEBGLGame</title>
@@ -13,27 +12,25 @@
     	
   </head>
   <body>		
-    <!-- Функция для вызова полноэкранной рекламы Яндекса из Unity -->
+    <!-- Функция для вызова полноэкранной рекламы Яндекса из Unity -->    
     <script>
-        function OpenAdWindow() {
-            window.yaContextCb.push(() => {
-			  if (Ya.Context.AdvManager.getPlatform() === 'desktop') {
-				// вызов полноэкранного блока для десктопной версии
-				Ya.Context.AdvManager.render({
-				  blockId: 'R-A-12163754-1',
-				  type: 'fullscreen',
-				  platform: 'desktop',
-				});
-			  } else {
-				// вызов полноэкранного блока для мобильной версии
-				Ya.Context.AdvManager.render({
-				  blockId: 'R-A-12163770-1',
-				  type: 'fullscreen',
-				  platform: 'touch',
-				});
-			  }
-		  });
-        }
+      window.yaContextCb.push(() => {
+          if (Ya.Context.AdvManager.getPlatform() === 'desktop') {
+            // вызов полноэкранного блока для десктопной версии
+            Ya.Context.AdvManager.render({
+              blockId: 'R-A-12163754-1',
+              type: 'fullscreen',
+              platform: 'desktop',
+            });
+          } else {
+            // вызов полноэкранного блока для мобильной версии
+            Ya.Context.AdvManager.render({
+              blockId: 'R-A-12163770-1',
+              type: 'fullscreen',
+              platform: 'touch',
+            });
+          }
+      });
     </script>
   </body>
 </html>
